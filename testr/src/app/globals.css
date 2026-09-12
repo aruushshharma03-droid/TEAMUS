@@ -1,0 +1,351 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-roboto);
+  --font-mono: var(--font-roboto-mono);
+  --font-heading: var(--font-roboto);
+  --font-display: var(--font-space-grotesk);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-container: var(--primary-container);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-coin: var(--coin);
+  --color-critical: var(--critical);
+  --color-major: var(--major);
+  --color-success: var(--success);
+  --color-surface-variant: var(--surface-variant);
+  --color-gold: var(--gold);
+  --color-gold-deep: var(--gold-deep);
+  --color-gold-soft: var(--gold-soft);
+  --radius-sm: 8px;
+  --radius-md: 8px;
+  --radius-lg: 8px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #202124;
+  --card: #ffffff;
+  --card-foreground: #202124;
+  --popover: #ffffff;
+  --popover-foreground: #202124;
+  --primary: #1a73e8;
+  --primary-foreground: #ffffff;
+  --primary-hover: #1557b0;
+  --primary-container: #e8f0fe;
+  --secondary: #e8f0fe;
+  --secondary-foreground: #174ea6;
+  --muted: #f8f9fa;
+  --muted-foreground: #5f6368;
+  --accent: #f8f9fa;
+  --accent-foreground: #202124;
+  --destructive: #d93025;
+  --border: #dadce0;
+  --input: #dadce0;
+  --ring: #1a73e8;
+  --coin: #f9ab00;
+  --critical: #d93025;
+  --major: #f29900;
+  --success: #1e8e3e;
+  --surface-variant: #f8f9fa;
+  --radius: 8px;
+
+  /* Game surfaces. Gold is the currency, so gold marks anything that moves coins or rank. */
+  --gold: #f9ab00;
+  --gold-deep: #b06000;
+  --gold-soft: #fef7e0;
+  --gold-line: rgba(249, 171, 0, 0.35);
+  --game-ink: #3d2c00;
+  --game-ground: linear-gradient(135deg, #fffaf0 0%, #fef3d7 45%, #fde9bb 100%);
+  --game-glow: 0 8px 28px -12px rgba(249, 171, 0, 0.55);
+}
+
+.dark {
+  --background: #1f1f1f;
+  --foreground: #e8eaed;
+  --card: #2d2e30;
+  --card-foreground: #e8eaed;
+  --popover: #2d2e30;
+  --popover-foreground: #e8eaed;
+  --primary: #8ab4f8;
+  --primary-foreground: #202124;
+  --primary-hover: #aecbfa;
+  --primary-container: #174ea6;
+  --secondary: #3c4043;
+  --secondary-foreground: #8ab4f8;
+  --muted: #2d2e30;
+  --muted-foreground: #9aa0a6;
+  --accent: #3c4043;
+  --accent-foreground: #e8eaed;
+  --destructive: #f28b82;
+  --border: #3c4043;
+  --input: #3c4043;
+  --ring: #8ab4f8;
+  --coin: #f9ab00;
+  --critical: #f28b82;
+  --major: #f9ab00;
+  --success: #81c995;
+  --surface-variant: #2d2e30;
+
+  --gold: #fdd663;
+  --gold-deep: #f9ab00;
+  --gold-soft: #3a2f14;
+  --gold-line: rgba(253, 214, 99, 0.28);
+  --game-ink: #fef7e0;
+  --game-ground: linear-gradient(135deg, #2a2416 0%, #352c17 45%, #241f14 100%);
+  --game-glow: 0 8px 30px -12px rgba(253, 214, 99, 0.35);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-size: 14px;
+    line-height: 20px;
+  }
+  html {
+    @apply font-sans;
+  }
+  .font-num {
+    font-family: var(--font-roboto-mono), ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+  /* Headings on game surfaces only. Numbers stay Roboto Mono everywhere. */
+  .font-display {
+    font-family: var(--font-space-grotesk), var(--font-roboto), sans-serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@keyframes mesh {
+  0% { transform: translate3d(-4%, -2%, 0) scale(1); }
+  50% { transform: translate3d(3%, 4%, 0) scale(1.08); }
+  100% { transform: translate3d(-4%, -2%, 0) scale(1); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+.hero-mesh {
+  background:
+    radial-gradient(900px 420px at 12% 20%, rgba(26, 115, 232, 0.18), transparent 60%),
+    radial-gradient(700px 380px at 88% 10%, rgba(232, 240, 254, 0.95), transparent 55%),
+    radial-gradient(640px 400px at 70% 80%, rgba(26, 115, 232, 0.12), transparent 60%),
+    #fff;
+}
+.dark .hero-mesh {
+  background:
+    radial-gradient(900px 420px at 12% 20%, rgba(138, 180, 248, 0.16), transparent 60%),
+    radial-gradient(700px 380px at 88% 10%, rgba(45, 46, 48, 0.9), transparent 55%),
+    #1f1f1f;
+}
+
+.m3-card {
+  @apply rounded-lg border bg-card;
+  border-color: var(--border);
+  box-shadow: none;
+  transition: box-shadow 120ms ease, transform 120ms ease;
+}
+.m3-card:hover {
+  box-shadow: 0 1px 3px rgba(60, 64, 67, 0.3);
+}
+
+.nav-pill[data-active="true"] {
+  background: #e8f0fe;
+  color: #1a73e8;
+}
+.dark .nav-pill[data-active="true"] {
+  background: #174ea6;
+  color: #8ab4f8;
+}
+
+/* ---------------------------------------------------------------------------
+   Game layer. The rule: game surfaces shout, work surfaces stay quiet.
+   Feed, triage, test workspace and post-a-bounty must never pick these up.
+   --------------------------------------------------------------------------- */
+
+@keyframes gold-sweep {
+  0% { transform: translateX(-120%) skewX(-18deg); }
+  60%, 100% { transform: translateX(320%) skewX(-18deg); }
+}
+
+@keyframes heat-rise {
+  0% { transform: translateY(2px) scaleY(0.7); opacity: 0; }
+  40% { opacity: 0.9; }
+  100% { transform: translateY(-9px) scaleY(1.25); opacity: 0; }
+}
+
+@keyframes gold-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(249, 171, 0, 0.45); }
+  70% { box-shadow: 0 0 0 14px rgba(249, 171, 0, 0); }
+}
+
+@keyframes seal-crack {
+  0% { transform: none; }
+  15% { transform: translateX(-3px) rotate(-0.6deg); }
+  30% { transform: translateX(3px) rotate(0.6deg); }
+  45% { transform: translateX(-2px) rotate(-0.4deg); }
+  60% { transform: translateX(2px) rotate(0.3deg); }
+  100% { transform: none; }
+}
+
+@keyframes coin-spin {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
+}
+
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* The visual opposite of .m3-card: bigger radius, gold ground, glow, inner highlight. */
+.game-surface {
+  position: relative;
+  isolation: isolate;
+  border-radius: 16px;
+  border: 1px solid var(--gold-line);
+  background: var(--game-ground);
+  box-shadow: var(--game-glow);
+  overflow: hidden;
+}
+.game-surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 55%);
+}
+.dark .game-surface::before {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 45%);
+}
+
+/* Sweeping highlight for hunt banners and the wallet vault.
+   NOT named .shimmer: tw-animate-css ships a .shimmer text utility that sets
+   background-clip:text + transparent text-fill, which makes any text on the
+   element invisible. */
+.gold-sweep {
+  isolation: isolate;
+}
+.gold-sweep::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 38%;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: gold-sweep 4.5s ease-in-out infinite;
+}
+.dark .gold-sweep::after {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16), transparent);
+}
+
+.gold-pulse {
+  animation: gold-pulse 2.4s ease-out infinite;
+}
+
+/* Mouse-tracked tilt, driven by --rx/--ry/--hx/--hy from TiltCard. */
+.tilt {
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
+  transition: transform 140ms ease-out;
+  will-change: transform;
+}
+.tilt-sheen {
+  isolation: isolate;
+}
+.tilt-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(
+    420px circle at var(--hx, 50%) var(--hy, 50%),
+    rgba(255, 255, 255, 0.38),
+    transparent 45%
+  );
+}
+.dark .tilt-sheen::after {
+  background: radial-gradient(
+    420px circle at var(--hx, 50%) var(--hy, 50%),
+    rgba(255, 255, 255, 0.14),
+    transparent 45%
+  );
+}
+
+/* Holographic band for the hunter card. */
+.holo {
+  isolation: isolate;
+}
+.holo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0.45;
+  background: linear-gradient(
+    115deg,
+    transparent 28%,
+    rgba(249, 171, 0, 0.28) 42%,
+    rgba(138, 180, 248, 0.3) 52%,
+    rgba(249, 171, 0, 0.22) 62%,
+    transparent 76%
+  );
+  background-size: 260% 100%;
+  background-position: calc(var(--hx, 50%) * 1.6) 0;
+}
+
+/* Secondary copy on game surfaces. text-muted-foreground is tuned for white/dark
+   M3 grounds and disappears on gold, so game surfaces get their own muted tone. */
+.game-muted {
+  color: var(--game-ink);
+  opacity: 0.72;
+}
+
+.heat-wave {
+  animation: heat-rise 1.5s ease-in-out infinite;
+}
+
+.float-soft {
+  animation: float-soft 5s ease-in-out infinite;
+}
